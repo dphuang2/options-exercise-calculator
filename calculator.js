@@ -187,16 +187,16 @@ function getDetailedAMTBreakdown(regularTaxableIncome, isoIncome, filingStatus) 
     
     // Calculate breakdown by bracket for AMT
     const amtBracketBreakdown = [];
-    let remainingAMTBase = step3AMTBase;
     
     for (const bracket of amtConfig.brackets) {
-        if (remainingAMTBase <= 0) break;
-        
         const bracketMin = bracket.min;
-        const bracketMax = bracket.max === Infinity ? remainingAMTBase : bracket.max;
+        const bracketMax = bracket.max === Infinity ? step3AMTBase : bracket.max;
         
+        // If AMT base exceeds this bracket's minimum, calculate tax on the portion in this bracket
         if (step3AMTBase > bracketMin) {
+            // Amount of AMT base that falls in this bracket
             const taxableInBracket = Math.min(step3AMTBase, bracketMax) - bracketMin;
+            
             if (taxableInBracket > 0) {
                 const taxInBracket = taxableInBracket * bracket.rate;
                 amtBracketBreakdown.push({
@@ -205,7 +205,6 @@ function getDetailedAMTBreakdown(regularTaxableIncome, isoIncome, filingStatus) 
                     rate: bracket.rate * 100,
                     tax: taxInBracket
                 });
-                remainingAMTBase -= taxableInBracket;
             }
         }
     }
