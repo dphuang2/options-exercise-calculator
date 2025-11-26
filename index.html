@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Options Exercise Calculator - California 2025</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Stock Options Exercise Calculator</h1>
+            <p class="subtitle">Find the maximum ISO shares you can exercise without triggering AMT (Private Company, California 2025)</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.9;">
+                For Incentive Stock Options (ISOs): The spread is NOT taxed as ordinary income at exercise, but IS included in AMT calculation.
+            </p>
+        </header>
+
+        <div class="calculator-section">
+            <div class="input-section">
+                <h2>Your Options Details</h2>
+                <div class="form-group">
+                    <label for="totalOptions">Total Options in Grant:</label>
+                    <input type="number" id="totalOptions" min="0" step="1" placeholder="e.g., 10000">
+                </div>
+                <div class="form-group">
+                    <label for="exercisePrice">Exercise Price per Share ($):</label>
+                    <input type="number" id="exercisePrice" min="0" step="0.01" placeholder="e.g., 0.50">
+                </div>
+                <div class="form-group">
+                    <label for="fmv">Fair Market Value (FMV) per Share ($):</label>
+                    <input type="number" id="fmv" min="0" step="0.01" placeholder="e.g., 5.00">
+                    <small style="color: #666; font-size: 0.85em;">(From 409A valuation for private companies)</small>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Expected Gross Salary 2025 ($):</label>
+                    <input type="number" id="salary" min="0" step="1000" placeholder="e.g., 150000">
+                </div>
+                <div class="form-group">
+                    <label for="filingStatus">Filing Status:</label>
+                    <select id="filingStatus">
+                        <option value="single">Single</option>
+                        <option value="married">Married Filing Jointly</option>
+                        <option value="head">Head of Household</option>
+                    </select>
+                </div>
+                <button id="calculateBtn" class="btn-primary">Calculate</button>
+                <div id="previousSession" style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; display: none;">
+                    <h3 style="font-size: 1em; margin-bottom: 10px; color: #1976d2;">📋 Previous Session Data</h3>
+                    <div id="previousSessionData" style="font-size: 0.9em; color: #555; line-height: 1.8;"></div>
+                    <button id="clearDataBtn" style="margin-top: 10px; padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9em;">Clear Saved Data</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <h2>Exercise Strategy Analysis</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <h3>Spread per Share</h3>
+                        <p class="value" id="spreadPerShare">$0.00</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Potential Spread</h3>
+                        <p class="value" id="totalSpread">$0.00</p>
+                    </div>
+                    <div class="card">
+                        <h3>Max Without AMT</h3>
+                        <p class="value" id="recommendedShares">0 shares</p>
+                    </div>
+                </div>
+
+                <div class="scenarios">
+                    <h3>Exercise Scenarios</h3>
+                    <div class="table-container">
+                        <table id="scenariosTable">
+                            <thead>
+                                <tr>
+                                    <th>Shares</th>
+                                    <th>Option Income</th>
+                                    <th>Total Income</th>
+                                    <th>Fed Tax</th>
+                                    <th>CA Tax</th>
+                                    <th>AMT ⚠️</th>
+                                    <th>Total Tax</th>
+                                    <th>After-Tax Value</th>
+                                    <th>Effective Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scenariosBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tax-breakdown">
+                    <h3>Tax Breakdown for Maximum Exercise Without AMT</h3>
+                    <div id="taxBreakdown"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Disclaimer:</strong> This calculator provides estimates only. Tax laws are complex and subject to change. Please consult with a tax professional for personalized advice.</p>
+            <p class="tax-info">Based on 2025 Federal and California tax brackets</p>
+        </footer>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
+
